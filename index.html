@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glofy | Contacto Comercial</title>
+<link rel="icon" type="image/png" href="https://raw.githubusercontent.com/comms-glofy/glofy-assets/refs/heads/main/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --dark:#212121;
+    --dark2:#383838;
+    --dark3:#2b2b2b;
+    --lime:#ceff00;
+    --gray:#e1e1e1;
+    --off:#ededed;
+    --line: rgba(225,225,225,0.14);
+    --line-strong: rgba(225,225,225,0.28);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--dark);
+    color:var(--off);
+    font-family:'Montserrat',sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;}
+
+  /* ---------- background texture ---------- */
+  .bg-grid{
+    position:fixed; inset:0; z-index:0; pointer-events:none;
+    background-image:
+      radial-gradient(circle at 12% 8%, rgba(206,255,0,0.07), transparent 40%),
+      radial-gradient(circle at 90% 85%, rgba(206,255,0,0.05), transparent 45%);
+  }
+
+  /* ---------- nav ---------- */
+  header{
+    position:relative; z-index:5;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:26px 6vw;
+  }
+  .logo img{height:26px; display:block;}
+  .lang-switch{
+    display:flex; align-items:center; gap:0;
+    border:1px solid var(--line-strong);
+    border-radius:999px;
+    padding:3px;
+    background:rgba(255,255,255,0.02);
+  }
+  .lang-switch button{
+    border:none; background:transparent; color:var(--gray);
+    font-size:11px; font-weight:700; letter-spacing:0.08em;
+    padding:7px 14px; border-radius:999px;
+    transition:all .25s ease;
+  }
+  .lang-switch button.active{
+    background:var(--lime); color:var(--dark);
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative; z-index:2;
+    padding:4vh 6vw 6vh;
+    max-width:900px;
+  }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:11px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase;
+    color:var(--lime); margin-bottom:18px;
+  }
+  .eyebrow::before{
+    content:''; width:6px; height:6px; border-radius:50%; background:var(--lime);
+  }
+  h1{
+    font-size:clamp(30px, 5.2vw, 52px);
+    font-weight:800; line-height:1.06; letter-spacing:-0.01em;
+    margin:0 0 18px;
+  }
+  h1 .accent{color:var(--lime);}
+  .hero p{
+    font-size:16px; line-height:1.6; color:var(--gray);
+    max-width:560px; margin:0;
+  }
+
+  /* ---------- section label ---------- */
+  .section-label{
+    position:relative; z-index:2;
+    padding:0 6vw; margin:2vh 0 26px;
+    display:flex; align-items:baseline; gap:14px;
+  }
+  .section-label h2{
+    font-size:13px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--off); margin:0;
+  }
+  .section-label .rule{ flex:1; height:1px; background:var(--line); }
+
+  /* ---------- team grid ---------- */
+  .team-wrap{
+    position:relative; z-index:2;
+    padding:0 6vw 8vh;
+  }
+  .team-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(270px, 1fr));
+    gap:20px;
+  }
+
+  .card{
+    background:var(--dark2);
+    border:1px solid var(--line);
+    border-radius:20px;
+    padding:26px;
+    position:relative;
+    display:flex; flex-direction:column;
+    transition:border-color .25s ease, transform .25s ease;
+  }
+  .card:hover{ border-color:var(--line-strong); transform:translateY(-3px); }
+
+  .card-top{ display:flex; align-items:flex-start; gap:16px; margin-bottom:18px; }
+
+  .avatar-wrap{ position:relative; flex-shrink:0; }
+  .avatar{
+    width:76px; height:76px; border-radius:16px; object-fit:cover;
+    background:#1b1b1b;
+    border:1px solid var(--line-strong);
+  }
+  .flag-badge{
+    position:absolute; bottom:-6px; right:-6px;
+    width:26px; height:26px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    background:var(--dark2);
+    border:2px solid var(--dark2);
+    box-shadow:0 0 0 1px var(--line-strong);
+    overflow:hidden;
+  }
+  .flag-badge img{
+    width:15px; height:11px; object-fit:cover; border-radius:2px;
+    box-shadow:0 0 0 1px rgba(0,0,0,0.5);
+  }
+
+  .id-block{ padding-top:2px; }
+  .name{ font-size:17px; font-weight:700; margin:0 0 4px; }
+  .role{ font-size:12.5px; color:var(--gray); line-height:1.4; margin:0; }
+
+  .card-actions{
+    display:flex; flex-direction:column; gap:8px; margin-top:auto;
+  }
+  .btn{
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    padding:11px 14px; border-radius:10px;
+    font-size:12.5px; font-weight:700; letter-spacing:0.02em;
+    border:1px solid var(--line-strong);
+    background:transparent; color:var(--off);
+    transition:all .2s ease;
+  }
+  .btn svg{ width:15px; height:15px; flex-shrink:0; }
+  .btn:hover{ border-color:var(--lime); color:var(--lime); }
+  .btn.primary{
+    background:var(--lime); color:var(--dark); border-color:var(--lime);
+  }
+  .btn.primary:hover{ background:#b8e600; color:var(--dark); }
+  .btn.disabled{
+    opacity:0.4; pointer-events:none;
+  }
+
+  /* ghost / "more team" cards */
+  .card.ghost{
+    background:transparent;
+    border:1.5px dashed var(--line-strong);
+    align-items:center; justify-content:center; text-align:center;
+    gap:10px; min-height:100%;
+  }
+  .ghost .ghost-avatars{ display:flex; margin-bottom:6px; }
+  .ghost .ghost-avatars .ga{
+    width:44px; height:44px; border-radius:12px;
+    background:var(--dark3); border:1px solid var(--line);
+    margin-left:-12px;
+    display:flex; align-items:center; justify-content:center;
+    color:var(--gray); opacity:0.7;
+  }
+  .ghost .ghost-avatars .ga:first-child{ margin-left:0; }
+  .ghost p{ font-size:12.5px; color:var(--gray); line-height:1.5; margin:0 0 4px; max-width:220px; }
+  .ghost .btn{ margin-top:8px; width:auto; padding:9px 16px; }
+
+  /* ---------- footer ---------- */
+  footer{
+    position:relative; z-index:2;
+    padding:26px 6vw 40px;
+    border-top:1px solid var(--line);
+    display:flex; align-items:center; justify-content:space-between;
+    flex-wrap:wrap; gap:12px;
+  }
+  footer .f-logo img{ height:16px; opacity:0.7; }
+  footer .f-note{ font-size:11.5px; color:var(--gray); opacity:0.8; }
+
+  /* ---------- modal ---------- */
+  .modal-overlay{
+    position:fixed; inset:0; z-index:50;
+    background:rgba(10,10,10,0.72);
+    backdrop-filter:blur(4px);
+    display:none; align-items:center; justify-content:center;
+    padding:20px;
+  }
+  .modal-overlay.open{ display:flex; }
+  .modal{
+    width:100%; max-width:460px;
+    background:var(--dark2);
+    border:1px solid var(--line-strong);
+    border-radius:20px;
+    padding:28px;
+    position:relative;
+    max-height:90vh; overflow-y:auto;
+  }
+  .modal-close{
+    position:absolute; top:18px; right:18px;
+    width:30px; height:30px; border-radius:50%;
+    background:transparent; border:1px solid var(--line-strong);
+    color:var(--gray); font-size:16px; line-height:1;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .modal-close:hover{ color:var(--lime); border-color:var(--lime); }
+  .modal-head{ display:flex; align-items:center; gap:12px; margin-bottom:20px; padding-right:30px; }
+  .modal-head img{ width:46px; height:46px; border-radius:12px; object-fit:cover; }
+  .modal-head h3{ font-size:16px; margin:0 0 2px; }
+  .modal-head span{ font-size:12px; color:var(--gray); }
+
+  .chip-label{ font-size:11px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--gray); margin:22px 0 12px; }
+  .chips{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:20px; }
+  .chip{
+    font-size:12px; padding:8px 13px; border-radius:999px;
+    border:1px solid var(--line-strong); background:transparent; color:var(--off);
+  }
+  .chip:hover{ border-color:var(--lime); color:var(--lime); }
+  .chip.active{ background:var(--lime); color:var(--dark); border-color:var(--lime); }
+
+  .field-label{
+    display:block; font-size:11px; font-weight:700; letter-spacing:0.08em;
+    text-transform:uppercase; color:var(--gray); margin:0 0 8px;
+  }
+  .field-label:not(:first-child){ margin-top:16px; }
+  input[type="text"], input[type="email"]{
+    width:100%; background:var(--dark3); border:1px solid var(--line-strong);
+    border-radius:12px; color:var(--off); font-family:inherit;
+    font-size:13.5px; padding:12px 14px;
+  }
+  input[type="text"]:focus, input[type="email"]:focus{ outline:none; border-color:var(--lime); }
+  input::placeholder{ color:#8a8a8a; }
+
+  textarea{
+    width:100%; min-height:110px; resize:vertical;
+    background:var(--dark3); border:1px solid var(--line-strong);
+    border-radius:12px; color:var(--off); font-family:inherit;
+    font-size:13.5px; line-height:1.6; padding:14px;
+  }
+  textarea:focus{ outline:none; border-color:var(--lime); }
+
+  .field-error{
+    font-size:12px; color:#ff6b6b; margin:14px 0 0; line-height:1.5;
+  }
+
+  .modal .btn.primary{ width:100%; padding:13px; font-size:13px; margin-top:20px; }
+  .modal .btn.primary:disabled{ opacity:0.55; pointer-events:none; }
+
+  .modal-success{ text-align:center; padding:8px 4px 4px; }
+  .success-check{
+    width:52px; height:52px; border-radius:50%; margin:0 auto 16px;
+    background:var(--lime); color:var(--dark);
+    display:flex; align-items:center; justify-content:center;
+    font-size:24px; font-weight:800;
+  }
+  .modal-success .s-title{ font-size:16px; font-weight:700; margin:0 0 6px; }
+  .modal-success .s-sub{ font-size:13px; color:var(--gray); margin:0; line-height:1.5; }
+
+  @media (max-width:560px){
+    header{ padding:20px 5vw; }
+    .hero{ padding:3vh 5vw 5vh; }
+    .section-label, .team-wrap{ padding-left:5vw; padding-right:5vw; }
+    footer{ padding:22px 5vw 32px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+
+<header>
+  <div class="logo">
+    <img src="https://raw.githubusercontent.com/comms-glofy/glofy-assets/refs/heads/main/logo-rebrand-glofy.png" alt="Glofy">
+  </div>
+  <div class="lang-switch">
+    <button id="btn-es" class="active" onclick="setLang('es')">ES</button>
+    <button id="btn-en" onclick="setLang('en')">EN</button>
+  </div>
+</header>
+
+<section class="hero">
+  <span class="eyebrow" data-i18n="eyebrow">Contacto comercial</span>
+  <h1 data-i18n-html="h1">Hablemos de tu <span class="accent">próximo talento</span></h1>
+  <p data-i18n="sub">Conectá directo con nuestro equipo comercial. Elegí a la persona indicada según tu región y coordiná una conversación en minutos.</p>
+</section>
+
+<div class="section-label">
+  <h2 data-i18n="section-label">Elegí con quién hablar</h2>
+  <div class="rule"></div>
+</div>
+
+<div class="team-wrap">
+  <div class="team-grid">
+
+    <!-- Valentina -->
+    <div class="card">
+      <div class="card-top">
+        <div class="avatar-wrap">
+          <img class="avatar" src="https://raw.githubusercontent.com/comms-glofy/glofy-assets/refs/heads/main/fotofirma-prieto.png" alt="Valentina Prieto">
+          <span class="flag-badge" title="Argentina"><img src="https://flagcdn.com/40x30/ar.png" alt="Argentina"></span>
+        </div>
+        <div class="id-block">
+          <p class="name">Valentina Prieto</p>
+          <p class="role">Business Development Manager</p>
+        </div>
+      </div>
+      <div class="card-actions">
+        <a class="btn" href="https://www.linkedin.com/in/valentinalprieto/" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.03-1.85-3.03-1.85 0-2.14 1.45-2.14 2.94v5.66H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.11 20.45H3.56V9h3.55v11.45z"/></svg>
+          LinkedIn
+        </a>
+        <button class="btn" onclick="openModal('valentina')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          <span data-i18n="btn-msg">Escribir mensaje</span>
+        </button>
+        <a class="btn primary" href="https://calendly.com/valentina-prieto-glofy" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+          <span data-i18n="btn-cal">Agendar llamada</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Luisa -->
+    <div class="card">
+      <div class="card-top">
+        <div class="avatar-wrap">
+          <img class="avatar" src="https://raw.githubusercontent.com/comms-glofy/glofy-assets/refs/heads/main/fotofirma-gomezcorrea.png" alt="Luisa Gómez Correa">
+          <span class="flag-badge" title="España"><img src="https://flagcdn.com/40x30/es.png" alt="España"></span>
+        </div>
+        <div class="id-block">
+          <p class="name">Luisa Gómez Correa</p>
+          <p class="role">International Business Development &amp; Partnerships Manager</p>
+        </div>
+      </div>
+      <div class="card-actions">
+        <a class="btn" href="https://www.linkedin.com/in/luisagomezcorrea/" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.03-1.85-3.03-1.85 0-2.14 1.45-2.14 2.94v5.66H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.11 20.45H3.56V9h3.55v11.45z"/></svg>
+          LinkedIn
+        </a>
+        <button class="btn" onclick="openModal('luisa')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          <span data-i18n="btn-msg">Escribir mensaje</span>
+        </button>
+        <span class="btn disabled">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+          <span data-i18n="btn-soon">Próximamente</span>
+        </span>
+      </div>
+    </div>
+
+    <!-- Ghost / more team -->
+    <div class="card ghost">
+      <div class="ghost-avatars">
+        <div class="ga">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v2"/></svg>
+        </div>
+        <div class="ga">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v2"/></svg>
+        </div>
+        <div class="ga">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v2"/></svg>
+        </div>
+      </div>
+      <p data-i18n="ghost-text">Y más personas de nuestro equipo comercial global, listas para ayudarte.</p>
+      <a class="btn" href="https://www.linkedin.com/company/glofy" target="_blank" rel="noopener">
+        <span data-i18n="ghost-btn">Ver equipo en LinkedIn</span>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="f-logo"><img src="https://raw.githubusercontent.com/comms-glofy/glofy-assets/refs/heads/main/logo-rebrand-glofy.png" alt="Glofy"></div>
+  <span class="f-note" data-i18n="footer">Glofy — Nearshore Talent</span>
+</footer>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-head">
+      <img id="modal-avatar" src="" alt="">
+      <div>
+        <h3 id="modal-name"></h3>
+        <span id="modal-role"></span>
+      </div>
+    </div>
+    <div id="modal-form">
+      <label class="field-label" for="modal-name-input" data-i18n="label-name">Tu nombre y/o empresa</label>
+      <input type="text" id="modal-name-input" data-i18n-placeholder="name-placeholder" placeholder="Ej: Juan Pérez — Acme Inc.">
+
+      <label class="field-label" for="modal-email-input" data-i18n="label-email">Tu mail de contacto</label>
+      <input type="email" id="modal-email-input" data-i18n-placeholder="email-placeholder" placeholder="vos@empresa.com">
+
+      <p class="chip-label" data-i18n="chip-label">Elegí tu consulta</p>
+      <div class="chips" id="modal-chips"></div>
+
+      <label class="field-label" for="modal-textarea" data-i18n="label-message">Tu mensaje</label>
+      <textarea id="modal-textarea" data-i18n-placeholder="ta-placeholder" placeholder="Elegí una sugerencia arriba o escribí tu propio mensaje..."></textarea>
+
+      <p class="field-error" id="modal-error" style="display:none;"></p>
+
+      <button class="btn primary" id="modal-send">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+        <span data-i18n="btn-send">Enviar consulta</span>
+      </button>
+    </div>
+    <div class="modal-success" id="modal-success" style="display:none;">
+      <div class="success-check">✓</div>
+      <p class="s-title" data-i18n="success-title">¡Recibimos tu consulta!</p>
+      <p class="s-sub" data-i18n="success-sub">Te vamos a contactar a la brevedad.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+const i18n = {
+  es:{
+    eyebrow:"Contacto comercial",
+    h1:'Hablemos de tu <span class="accent">próximo talento</span>',
+    sub:"Conectá directo con nuestro equipo comercial. Elegí a la persona indicada según tu región y coordiná una conversación en minutos.",
+    "section-label":"Elegí con quién hablar",
+    "btn-msg":"Escribir mensaje",
+    "btn-cal":"Agendar llamada",
+    "btn-soon":"Próximamente",
+    "btn-send":"Enviar consulta",
+    "ghost-text":"Y más personas de nuestro equipo comercial global, listas para ayudarte.",
+    "ghost-btn":"Ver equipo en LinkedIn",
+    "chip-label":"Elegí tu consulta",
+    "label-name":"Tu nombre y/o empresa",
+    "name-placeholder":"Ej: Juan Pérez — Acme Inc.",
+    "label-email":"Tu mail de contacto",
+    "email-placeholder":"vos@empresa.com",
+    "label-message":"Tu mensaje",
+    "ta-placeholder":"Elegí una sugerencia arriba o escribí tu propio mensaje...",
+    "success-title":"¡Recibimos tu consulta!",
+    "success-sub":"Te vamos a contactar a la brevedad.",
+    "err-name":"Contanos tu nombre y/o empresa.",
+    "err-email":"Ingresá un mail válido.",
+    "err-message":"Escribí tu consulta antes de enviar.",
+    "err-send":"No pudimos enviar tu consulta. Probá de nuevo en un momento.",
+    footer:"Glofy — Nearshore Talent",
+    subjectPrefix:"Contacto vía landing comercial",
+    chips:[
+      "Quiero conocer más sobre Glofy.",
+      "Busco talento para mi equipo.",
+      "Quiero coordinar una llamada."
+    ],
+    templates:{
+      "Quiero conocer más sobre Glofy.":"Hola {name}, quiero conocer más sobre cómo funciona el modelo de Nearshore Talent de Glofy.",
+      "Busco talento para mi equipo.":"Hola {name}, estoy buscando sumar talento a mi equipo y me gustaría entender cómo puede ayudarme Glofy.",
+      "Quiero coordinar una llamada.":"Hola {name}, me gustaría coordinar una llamada breve para conversar sobre una posible colaboración con Glofy."
+    }
+  },
+  en:{
+    eyebrow:"Sales contact",
+    h1:'Let\'s talk about your <span class="accent">next talent</span>',
+    sub:"Connect directly with our sales team. Choose the right person for your region and set up a conversation in minutes.",
+    "section-label":"Choose who to talk to",
+    "btn-msg":"Send a message",
+    "btn-cal":"Book a call",
+    "btn-soon":"Coming soon",
+    "btn-send":"Send inquiry",
+    "ghost-text":"And more of our global sales team, ready to help.",
+    "ghost-btn":"See the team on LinkedIn",
+    "chip-label":"Pick your inquiry",
+    "label-name":"Your name and/or company",
+    "name-placeholder":"E.g.: John Smith — Acme Inc.",
+    "label-email":"Your contact email",
+    "email-placeholder":"you@company.com",
+    "label-message":"Your message",
+    "ta-placeholder":"Pick a suggestion above or write your own message...",
+    "success-title":"We've got your inquiry!",
+    "success-sub":"We'll be in touch shortly.",
+    "err-name":"Please tell us your name and/or company.",
+    "err-email":"Please enter a valid email.",
+    "err-message":"Write your inquiry before sending.",
+    "err-send":"We couldn't send your inquiry. Please try again shortly.",
+    footer:"Glofy — Nearshore Talent",
+    subjectPrefix:"Contact via sales landing page",
+    chips:[
+      "I'd like to learn more about Glofy.",
+      "I'm looking for talent for my team.",
+      "I'd like to schedule a call."
+    ],
+    templates:{
+      "I'd like to learn more about Glofy.":"Hi {name}, I'd like to learn more about how Glofy's Nearshore Talent model works.",
+      "I'm looking for talent for my team.":"Hi {name}, I'm looking to add talent to my team and would like to understand how Glofy could help.",
+      "I'd like to schedule a call.":"Hi {name}, I'd like to schedule a short call to discuss a potential collaboration with Glofy."
+    }
+  }
+};
+
+let currentLang = 'es';
+
+const people = {
+  valentina:{
+    name:"Valentina Prieto",
+    role:"Business Development Manager",
+    email:"valentina.prieto@glofy.co",
+    avatar:"https://raw.githubusercontent.com/comms-glofy/glofy-assets/refs/heads/main/fotofirma-prieto.png"
+  },
+  luisa:{
+    name:"Luisa Gómez Correa",
+    role:"International Business Development & Partnerships Manager",
+    email:"luisa.gomezcorrea@glofy.co",
+    avatar:"https://raw.githubusercontent.com/comms-glofy/glofy-assets/refs/heads/main/fotofirma-gomezcorrea.png"
+  }
+};
+
+// TODO: reemplazar por la URL de un webhook real (ej. un workflow de n8n con
+// un nodo Webhook + 2 nodos de Gmail: uno que le llega a la persona y otro
+// de auto-respuesta a quien completó el formulario). Mientras diga
+// "PENDIENTE_CONFIGURAR", el formulario simula el envío para poder probar
+// el flujo, pero no manda nada real todavía.
+const WEBHOOK_URL = "PENDIENTE_CONFIGURAR";
+
+let activePerson = null;
+let selectedChip = null;
+let typingTimer = null;
+
+function setLang(lang){
+  currentLang = lang;
+  document.getElementById('btn-es').classList.toggle('active', lang==='es');
+  document.getElementById('btn-en').classList.toggle('active', lang==='en');
+  document.documentElement.lang = lang;
+
+  const dict = i18n[lang];
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key = el.getAttribute('data-i18n');
+    if(dict[key] !== undefined) el.textContent = dict[key];
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(el=>{
+    const key = el.getAttribute('data-i18n-html');
+    if(dict[key] !== undefined) el.innerHTML = dict[key];
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{
+    const key = el.getAttribute('data-i18n-placeholder');
+    if(dict[key] !== undefined) el.placeholder = dict[key];
+  });
+
+  if(activePerson) renderChips();
+}
+
+function openModal(personKey){
+  activePerson = personKey;
+  selectedChip = null;
+  const p = people[personKey];
+  document.getElementById('modal-avatar').src = p.avatar;
+  document.getElementById('modal-avatar').alt = p.name;
+  document.getElementById('modal-name').textContent = p.name;
+  document.getElementById('modal-role').textContent = p.role;
+  document.getElementById('modal-name-input').value = '';
+  document.getElementById('modal-email-input').value = '';
+  document.getElementById('modal-textarea').value = '';
+  hideError();
+  document.getElementById('modal-form').style.display = 'block';
+  document.getElementById('modal-success').style.display = 'none';
+  const sendBtn = document.getElementById('modal-send');
+  sendBtn.disabled = false;
+  sendBtn.querySelector('span').textContent = i18n[currentLang]['btn-send'];
+  renderChips();
+  document.getElementById('modal-overlay').classList.add('open');
+}
+
+function closeModal(){
+  document.getElementById('modal-overlay').classList.remove('open');
+  clearInterval(typingTimer);
+  activePerson = null;
+}
+
+function renderChips(){
+  const dict = i18n[currentLang];
+  const wrap = document.getElementById('modal-chips');
+  wrap.innerHTML = '';
+  dict.chips.forEach(chipText=>{
+    const btn = document.createElement('button');
+    btn.className = 'chip';
+    btn.type = 'button';
+    btn.textContent = chipText;
+    if(chipText === selectedChip) btn.classList.add('active');
+    btn.onclick = ()=>{
+      selectedChip = chipText;
+      document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+      btn.classList.add('active');
+      const p = people[activePerson];
+      const firstName = p.name.split(' ')[0];
+      const fullText = dict.templates[chipText].replace('{name}', firstName);
+      typeText(fullText);
+      hideError();
+    };
+    wrap.appendChild(btn);
+  });
+}
+
+function typeText(text){
+  clearInterval(typingTimer);
+  const ta = document.getElementById('modal-textarea');
+  ta.value = '';
+  let i = 0;
+  typingTimer = setInterval(()=>{
+    ta.value += text.charAt(i);
+    i++;
+    if(i >= text.length) clearInterval(typingTimer);
+  }, 14);
+}
+
+function showError(msg){
+  const err = document.getElementById('modal-error');
+  err.textContent = msg;
+  err.style.display = 'block';
+}
+function hideError(){
+  document.getElementById('modal-error').style.display = 'none';
+}
+
+function isValidEmail(email){
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+document.getElementById('modal-textarea').addEventListener('input', hideError);
+
+document.getElementById('modal-send').addEventListener('click', async ()=>{
+  if(!activePerson) return;
+  const dict = i18n[currentLang];
+  const p = people[activePerson];
+  const nameVal = document.getElementById('modal-name-input').value.trim();
+  const emailVal = document.getElementById('modal-email-input').value.trim();
+  const messageVal = document.getElementById('modal-textarea').value.trim();
+
+  if(!nameVal){ showError(dict['err-name']); return; }
+  if(!isValidEmail(emailVal)){ showError(dict['err-email']); return; }
+  if(!messageVal){ showError(dict['err-message']); return; }
+  hideError();
+
+  const sendBtn = document.getElementById('modal-send');
+  sendBtn.disabled = true;
+
+  const payload = {
+    contactName: nameVal,
+    contactEmail: emailVal,
+    message: messageVal,
+    inquiryType: selectedChip || null,
+    salesPerson: p.name,
+    salesPersonEmail: p.email,
+    lang: currentLang,
+    source: 'landing-contacto-comercial'
+  };
+
+  try{
+    if(WEBHOOK_URL === "PENDIENTE_CONFIGURAR"){
+      // Simulación: aún no hay webhook conectado, así se puede probar el flujo.
+      await new Promise(res=>setTimeout(res, 700));
+    } else {
+      const resp = await fetch(WEBHOOK_URL, {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify(payload)
+      });
+      if(!resp.ok) throw new Error('bad response');
+    }
+    document.getElementById('modal-form').style.display = 'none';
+    document.getElementById('modal-success').style.display = 'block';
+  } catch(err){
+    sendBtn.disabled = false;
+    showError(dict['err-send']);
+  }
+});
+
+document.getElementById('modal-overlay').addEventListener('click', (e)=>{
+  if(e.target.id === 'modal-overlay') closeModal();
+});
+document.addEventListener('keydown', (e)=>{
+  if(e.key === 'Escape') closeModal();
+});
+</script>
+
+</body>
+</html>
